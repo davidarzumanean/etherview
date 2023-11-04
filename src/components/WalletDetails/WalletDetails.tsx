@@ -22,7 +22,7 @@ export const WalletDetails = () => {
   const transactionsPagination = useAppSelector(walletSelectors.transactionsPagination);
 
   const isCurrentAddress = (trAddress: string) => {
-    if (!trAddress || address) return false;
+    if (!trAddress || !address) return false;
     return trAddress.toLowerCase() === address.toLowerCase();
   }
 
