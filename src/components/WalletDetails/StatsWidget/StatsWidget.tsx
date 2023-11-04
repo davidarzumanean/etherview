@@ -1,27 +1,35 @@
 import {walletActions, walletSelectors} from "../../../redux/wallet.slice";
-import {
-  EthereumIcon,
-  WalletIcon,
-  PiggyBankIcon, DollarSackIcon,
-} from "../../../assets";
+import {DollarSackIcon, EthereumIcon, PiggyBankIcon, WalletIcon,} from "../../../assets";
 import {useEffect} from "react";
 import {formatAsUSD} from "../../../utils/utils";
 import {TruncatedText} from "../../TruncatedText";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import {StatData} from "./StatData";
 import styles from './StatsWidget.module.scss';
+import {RequestStatus} from "../../../types";
 
 export const StatsWidget = () => {
-  const {address, balance} = useAppSelector(walletSelectors.getWalletInfo);
+  const {address, balance, status} = useAppSelector(walletSelectors.walletInfo);
   const eth = useAppSelector(walletSelectors.ethData);
   const {price} = eth;
   const dispatch = useAppDispatch();
+
+  const getFormattedEthPrice = () => {
+    if (!price.ethusd) return 'N/A';
+    return formatAsUSD(parseInt(price.ethusd));
+  }
+
+  const getWalletValue = () => {
+    if (status === RequestStatus.LOADING) return '';
+    if (!balance || !price.ethusd) return 'N/A';
+    return formatAsUSD(parseInt(balance) * parseInt(price.ethusd));
+  }
 
   const data = [
     {
       icon: <EthereumIcon/>,
       title: 'Eth price',
-      value: <StatData value={`${formatAsUSD(parseInt(price.ethusd))}`} reqStatus={eth.status} />,
+      value: <StatData value={getFormattedEthPrice()} reqStatus={eth.status} />,
     },
     ...(balance ? [
       {
@@ -32,7 +40,7 @@ export const StatsWidget = () => {
       {
         icon: <DollarSackIcon/>,
         title: 'Value',
-        value: <StatData value={`${formatAsUSD(parseInt(balance) * parseInt(price.ethusd))}`} reqStatus={eth.status} />,
+        value: <StatData value={getWalletValue()} reqStatus={eth.status} />,
       },
       {
         icon: <WalletIcon/>,

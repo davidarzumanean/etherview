@@ -8,7 +8,6 @@ interface IWalletState {
   info: {
     address: string;
     balance: string | null;
-    error: string;
     status: RequestStatus;
   }
   ethData: {
@@ -25,13 +24,13 @@ interface IWalletState {
     sort: SortOptions;
     perPage: number;
   };
+  error: string;
 }
 
 const initialState: IWalletState = {
   info: {
     address: '',
     balance: null,
-    error: '',
     status: RequestStatus.IDLE,
   },
   ethData: {
@@ -53,6 +52,7 @@ const initialState: IWalletState = {
     sort: SortOptions.DESC,
     perPage: PER_PAGE,
   },
+  error: '',
 };
 
 const getEthData = createAsyncThunk(
@@ -107,8 +107,9 @@ const walletSlice = createSlice({
   initialState,
   reducers: {
     setAddress: (state, action: PayloadAction<string>) => {
-      state.info.error = '';
+      state.error = '';
       state.info.address = action.payload;
+      state.info.status = RequestStatus.IDLE;
     },
     setBalance: (state, action: PayloadAction<string | null>) => {
       state.info.balance = action.payload;
@@ -120,7 +121,7 @@ const walletSlice = createSlice({
       state.transactions.data = state.transactions.data.concat(action.payload);
     },
     setError: (state, action: PayloadAction<string>) => {
-      state.info.error = action.payload;
+      state.error = action.payload;
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.transactionsPagination.page = action.payload;
@@ -145,21 +146,24 @@ const walletSlice = createSlice({
     })
     builder.addCase(fetchTransactions.rejected, (state, action) => {
       state.transactions.status = RequestStatus.ERROR;
-      state.info.error = action.error.message || '';
+      state.error = action.error.message || '';
     })
     builder.addCase(toggleSort.fulfilled, (state, action) => {
       const {sort, transactions} = action.payload;
       state.transactionsPagination.sort = sort;
       state.transactions.data = transactions;
     })
-    builder.addCase(getEthBalance.fulfilled, (state, action) => {
-      state.info.balance = action.payload;
-    })
     builder.addCase(getEthBalance.pending, (state) => {
       state.info.status = RequestStatus.LOADING;
     })
+    builder.addCase(getEthBalance.fulfilled, (state, action) => {
+      state.info.balance = action.payload;
+      state.info.status = RequestStatus.IDLE;
+    })
     builder.addCase(getEthData.fulfilled, (state, action) => {
-      state.ethData.price = action.payload;
+      if (action.payload.ethusd) {
+        state.ethData.price = action.payload;
+      }
       state.ethData.status = RequestStatus.IDLE;
     })
     builder.addCase(getEthData.pending, (state) => {
@@ -177,10 +181,11 @@ export const walletActions = {
 };
 
 export const walletSelectors = {
-  getWalletInfo: (state: { wallet: IWalletState }) => state.wallet.info,
-  getTransactions: (state: { wallet: IWalletState }) => state.wallet.transactions,
+  walletInfo: (state: { wallet: IWalletState }) => state.wallet.info,
+  transactions: (state: { wallet: IWalletState }) => state.wallet.transactions,
   transactionsPagination: (state: { wallet: IWalletState }) => state.wallet.transactionsPagination,
   ethData: (state: { wallet: IWalletState }) => state.wallet.ethData,
+  error: (state: { wallet: IWalletState }) => state.wallet.error,
 }
 
 export default walletSlice.reducer;

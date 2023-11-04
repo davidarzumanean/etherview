@@ -35,10 +35,10 @@ export const formatAsUSD = (amount: number): string => {
   return formatter.format(amount);
 }
 
-export const weiToUSD = (weiAmount: number, ethPriceInUSD: number): number => {
+export const weiToUSD = (weiAmount: number, ethPriceInUSD: number): string => {
   const etherAmount = weiAmount / 1e18;
 
-  return etherAmount * ethPriceInUSD;
+  return formatAsUSD(etherAmount * ethPriceInUSD);
 }
 
 export const timestampToDaysAndHours = (timestamp: number): string => {

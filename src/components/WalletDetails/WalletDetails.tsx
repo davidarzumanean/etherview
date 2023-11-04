@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {walletActions, walletSelectors} from "../../redux/wallet.slice";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {RequestStatus, SortOptions} from "../../types";
-import {formatAsUSD, timestampToDaysAndHours, weiToUSD} from "../../utils/utils";
+import {timestampToDaysAndHours, weiToUSD} from "../../utils/utils";
 import {Table, TableSkeleton} from "../Table";
 import {TruncatedText} from "../TruncatedText";
 import {Button} from "../form";
@@ -16,9 +16,15 @@ export const WalletDetails = () => {
 
   const dispatch = useAppDispatch();
   const eth = useAppSelector(walletSelectors.ethData);
-  const {address, error} = useAppSelector(walletSelectors.getWalletInfo);
-  const transactions = useAppSelector(walletSelectors.getTransactions);
+  const {address} = useAppSelector(walletSelectors.walletInfo);
+  const error = useAppSelector(walletSelectors.error);
+  const transactions = useAppSelector(walletSelectors.transactions);
   const transactionsPagination = useAppSelector(walletSelectors.transactionsPagination);
+
+  const isCurrentAddress = (trAddress: string) => {
+    if (!trAddress || address) return false;
+    return trAddress.toLowerCase() === address.toLowerCase();
+  }
 
   const getTableData = useCallback(() => {
     return transactions.data.map((tx) => ({
@@ -31,8 +37,11 @@ export const WalletDetails = () => {
         value: (
           <div style={{display: 'flex', gap: '30px'}}>
             <TruncatedText text={tx.from} href={`https://etherscan.io/address/${tx.from}`}/>
-            <>{tx.to.toLowerCase() === address.toLowerCase() ? (<Badge variant={'success'}>IN</Badge>) : (
-              <Badge variant={'warning'}>OUT</Badge>)}</>
+            <>
+              {isCurrentAddress(tx.to) ?
+                (<Badge variant={'success'}>IN</Badge>) :
+                (<Badge variant={'warning'}>OUT</Badge>)}
+            </>
           </div>
         ),
       },
@@ -46,7 +55,7 @@ export const WalletDetails = () => {
       },
       value: {
         label: 'Value',
-        value: <div>{formatAsUSD(weiToUSD(tx.value, parseInt(eth.price.ethusd)))}</div>,
+        value: <div>{weiToUSD(tx.value, parseInt(eth.price.ethusd))}</div>,
       },
       confirmations: {
         label: 'Confirmations',

@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 export const AddressSearch = () => {
   const [addressValue, setAddressValue] = useState('')
   const dispatch = useAppDispatch();
-  const walletInfo = useAppSelector(walletSelectors.getWalletInfo);
+  const walletInfo = useAppSelector(walletSelectors.walletInfo);
   const walletAddress = walletInfo.address;
 
   const {setAddress, setError} = walletActions;
