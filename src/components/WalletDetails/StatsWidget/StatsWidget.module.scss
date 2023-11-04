@@ -38,6 +38,9 @@
   .statsWidgetItemIcon {
     height: 30px;
     fill: var(--btn-active-color);
+    svg {
+      height: 100%;
+    }
   }
 
   .statsWidgetItemTitle {
