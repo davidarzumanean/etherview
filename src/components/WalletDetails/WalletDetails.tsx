@@ -59,15 +59,6 @@ export const WalletDetails = () => {
     setTableData(getTableData());
   }, [getTableData, transactions]);
 
-  useEffect(() => {
-    // no socket, but would be cool to have up-to-date data
-    const interval = setInterval(() => {
-      dispatch(walletActions.fetchTransactions(address));
-    }, 3 * 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   const toggleSort = async () => {
     dispatch(walletActions.toggleSort());
   }
