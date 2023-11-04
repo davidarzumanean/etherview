@@ -1,0 +1,14 @@
+.skeletonContainer {
+  width: 100%;
+
+  td {
+    width: 20%;
+    padding: 5px;
+    &:first-child {
+      padding-left: 15px;
+    }
+    &:last-child {
+      padding-right: 15px;
+    }
+  }
+}

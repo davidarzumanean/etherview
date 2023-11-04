@@ -1,0 +1,41 @@
+.walletDetails {
+  padding-top: 20px;
+
+  .tableContainer {
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: var(--main-content-accent-bg);
+  }
+
+  .tableWrapper {
+    max-width: 100%;
+    overflow-x: auto;
+
+    :global(.truncated-text) {
+      max-width: 50vw;
+    }
+  }
+
+  .tableContainerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+
+  .tableContainerFooter {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sortButton {
+    color: var(--btn-active-color);
+    & svg {
+      width: 20px;
+      fill: var(--btn-active-color)
+    }
+  }
+}

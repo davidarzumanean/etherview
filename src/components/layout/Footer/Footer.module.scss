@@ -1,0 +1,30 @@
+.footer {
+  background-color: var(--main-content-accent-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 20px 0;
+  margin-top: 20px;
+  font-size: 14px;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    height: 30px;
+    white-space: nowrap;
+
+    svg {
+      min-width: 16px;
+    }
+  }
+
+  .copy {
+    text-align: right;
+  }
+}

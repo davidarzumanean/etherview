@@ -1,0 +1,36 @@
+.truncatedTextContainer {
+  display: inline-grid;
+  grid-template-columns: auto 15px;
+  grid-gap: 5px;
+
+  button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .text {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  a {
+    color: var(--btn-active-color);
+    text-decoration: none;
+  }
+
+  .copyButton {
+    cursor: pointer;
+    min-width: 15px;
+
+    svg {
+      vertical-align: top;
+      fill: var(--btn-active-color);
+    }
+
+    .checkIcon {
+      fill: var(--color-success);
+    }
+  }
+}

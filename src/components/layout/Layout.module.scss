@@ -1,0 +1,10 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: var(--main-content-bg);
+
+  .contentContainer {
+    flex-grow: 1;
+  }
+}

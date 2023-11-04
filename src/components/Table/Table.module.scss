@@ -1,0 +1,34 @@
+.tableContainer {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  box-shadow: var(--box-shadow);
+
+  td, th {
+    padding: 10px 15px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    @media screen and (max-width: 1024px) {
+      min-width: 20vw;
+      padding: 5px 10px;
+      &:first-child {
+        padding-left: 20px;
+      }
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+    @media screen and (max-width: 585px) {
+      min-width: 50vw;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: box-shadow 0.2s ease-in-out 0s;
+      &:hover {
+        box-shadow: inset 0 0 0 9999px var(--table-row-hover-color);
+      }
+    }
+  }
+}

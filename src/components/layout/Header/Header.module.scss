@@ -1,0 +1,35 @@
+.headerContainer {
+  box-shadow: var(--box-shadow);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--main-content-accent-bg);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    gap: 10px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+
+    svg {
+      min-width: 18px;
+    }
+
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+      svg {
+        min-width: 16px;
+      }
+    }
+  }
+}
+
