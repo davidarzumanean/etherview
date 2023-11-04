@@ -1,5 +1,5 @@
 import type {FC, FormEvent, ChangeEvent} from "react";
-import {SearchIcon} from "../../../assets/SearchIcon";
+import {SearchIcon} from "../../../assets";
 import styles from './SearchInput.module.scss';
 
 interface ISearchInputProps {

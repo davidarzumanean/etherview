@@ -1,6 +1,6 @@
 .badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
+  padding: 2px 4px;
   font-size: 75%;
   font-weight: 700;
   line-height: 1;
@@ -10,7 +10,7 @@
   border-radius: 0.25rem;
   background-color: var(--main-content-bg);
   border: 1px solid var(--border-color);
-  min-width: 30px;
+  min-width: 25px;
 
   &.success {
     background-color: var(--bg-success);

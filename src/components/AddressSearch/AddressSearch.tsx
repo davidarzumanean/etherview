@@ -4,7 +4,6 @@ import {walletSelectors, walletActions} from "../../redux/wallet.slice";
 import {getQueryParam, setUrlQuery} from "../../utils/utils";
 import Web3Helper from "../../utils/web3Helper";
 import {SearchInput} from "../form";
-import './AddressSearch.scss';
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 export const AddressSearch = () => {
