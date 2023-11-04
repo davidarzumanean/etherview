@@ -93,7 +93,8 @@ export const WalletDetails = () => {
       <StatsWidget/>
 
       {
-        address && (
+        address &&
+        (
           <div className={styles.tableContainer}>
             <div className={styles.tableContainerHeader}>
               <Button onClick={toggleSort} className={styles.sortButton}>
@@ -101,7 +102,7 @@ export const WalletDetails = () => {
               </Button>
             </div>
             <div className={styles.tableWrapper}>
-              {transactions.status === RequestStatus.LOADING
+              {transactions.status === RequestStatus.LOADING && transactions.data.length === 0
                 ?
                 <TableSkeleton/>
                 :
