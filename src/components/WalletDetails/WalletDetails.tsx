@@ -92,25 +92,29 @@ export const WalletDetails = () => {
     <div className={`main-container ${styles.walletDetails}`}>
       <StatsWidget/>
 
-      <div className={styles.tableContainer}>
-        <div className={styles.tableContainerHeader}>
-          <Button onClick={toggleSort} className={styles.sortButton}>
-            {transactionsPagination.sort === SortOptions.DESC ? <><DescIcon/> Descending</> : <><AscIcon/> Ascending</>}
-          </Button>
-        </div>
-        <div className={styles.tableWrapper}>
-          {transactions.status === RequestStatus.LOADING
-            ?
-            <TableSkeleton/>
-            :
-            <Table data={tableData}/>
-          }
-        </div>
-        <div className={styles.tableContainerFooter}>
-          {!transactionsPagination.isLastPage && transactions.status === RequestStatus.IDLE &&
-              <Button onClick={loadMore} className={styles.loadMoreButton}>Load More</Button>}
-        </div>
-      </div>
+      {
+        address && (
+          <div className={styles.tableContainer}>
+            <div className={styles.tableContainerHeader}>
+              <Button onClick={toggleSort} className={styles.sortButton}>
+                {transactionsPagination.sort === SortOptions.DESC ? <><DescIcon/> Descending</> : <><AscIcon/> Ascending</>}
+              </Button>
+            </div>
+            <div className={styles.tableWrapper}>
+              {transactions.status === RequestStatus.LOADING
+                ?
+                <TableSkeleton/>
+                :
+                <Table data={tableData}/>
+              }
+            </div>
+            <div className={styles.tableContainerFooter}>
+              {!transactionsPagination.isLastPage && transactions.status === RequestStatus.IDLE &&
+                  <Button onClick={loadMore} className={styles.loadMoreButton}>Load More</Button>}
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 }
